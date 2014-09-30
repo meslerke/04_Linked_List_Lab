@@ -102,7 +102,7 @@ typename LinkedList<T>::Node* LinkedList<T>::find(unsigned long i){
 		return dummyNode;
 	}
 	else if (i > numItems) {
-		throw std:::string("Index is larger than number of items, in find()"); // Creating a local variable that does not have a name
+		throw std::string("Index is larger than number of items, in find()"); // Creating a local variable that does not have a name
 	}
 	else {
 		Node* ret = dummyNode->next;
@@ -110,8 +110,8 @@ typename LinkedList<T>::Node* LinkedList<T>::find(unsigned long i){
 			ret = ret->next;
 			i--;
 		}
+		return ret;
 	}
-	return ret;
 }
 
 template <class T>
