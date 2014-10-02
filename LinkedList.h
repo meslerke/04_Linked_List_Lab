@@ -116,17 +116,64 @@ typename LinkedList<T>::Node* LinkedList<T>::find(unsigned long i){
 
 template <class T>
 void LinkedList<T>::set(unsigned long i, T x){
-	//TODO
+	Node* myNode = find(i);
+	if (myNode == dummyNode) {
+		throw std::string("In set(), index was too large.");
+	}
+	else {
+		myNode->data = x;
+	}
 }
 
 template <class T>
 void LinkedList<T>::add(unsigned long i, T x){
-	//TODO
+	Node* myNode = find(i);
+	if (myNode == dummyNode) {
+		
+		if(i != 0) { //adding a node to the end of the list
+			myNode = find(i - 1);
+			Node* newNode = new Node();
+			newNode->data = x;
+			myNode->next = newNode;
+			newNode->prev = myNode;
+			newNode->next = dummyNode;
+			dummyNode->prev = newNode;
+			numItems++;
+		}
+		else { //adding a new node when there are currently no nodes other than dummyNode
+			Node* newNode = new Node();
+			newNode->data = x;
+			dummyNode->next = newNode;
+			newNode->prev = dummyNode;
+			newNode->next = dummyNode;
+			dummyNode->prev = newNode;
+			numItems++;
+		}
+
+	}
+	else {  //adding a new node to the list in between two existing nodes
+		Node* newNode = new Node();
+		newNode->data = x;
+		myNode->prev->next = newNode;
+		newNode->prev = myNode->prev;
+		newNode->next = myNode;
+		myNode->prev = newNode;
+		numItems++;
+	}
 }
 
 template <class T>
 void LinkedList<T>::remove(unsigned long i){
-	//TODO
+	Node* myNode = find(i);
+	if (myNode == dummyNode) {
+		throw std::string("In remove(), index was too large.");
+	}
+	else {
+		myNode->prev->next = myNode->next;
+		myNode->next->prev = myNode->prev;
+		numItems--;
+		delete myNode;
+	}
 }
 
 template <class T>
@@ -143,6 +190,5 @@ T LinkedList<T>::get(unsigned long i){
 
 template <class T>
 unsigned long LinkedList<T>::size(){
-	//TODO
-	return 0;
+	return numItems;
 }
