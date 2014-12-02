@@ -82,6 +82,7 @@ template <class T>
 LinkedList<T>::LinkedList(){
 	dummyNode = new Node();
 	dummyNode->next = dummyNode;
+	dummyNode->prev = dummyNode;
 
 	numItems = 0;
 }
@@ -128,30 +129,7 @@ void LinkedList<T>::set(unsigned long i, T x){
 template <class T>
 void LinkedList<T>::add(unsigned long i, T x){
 	Node* myNode = find(i);
-	if (myNode == dummyNode) {
-		
-		if(i != 0) { //adding a node to the end of the list
-			myNode = find(i - 1);
-			Node* newNode = new Node();
-			newNode->data = x;
-			myNode->next = newNode;
-			newNode->prev = myNode;
-			newNode->next = dummyNode;
-			dummyNode->prev = newNode;
-			numItems++;
-		}
-		else { //adding a new node when there are currently no nodes other than dummyNode
-			Node* newNode = new Node();
-			newNode->data = x;
-			dummyNode->next = newNode;
-			newNode->prev = dummyNode;
-			newNode->next = dummyNode;
-			dummyNode->prev = newNode;
-			numItems++;
-		}
 
-	}
-	else {  //adding a new node to the list in between two existing nodes
 		Node* newNode = new Node();
 		newNode->data = x;
 		myNode->prev->next = newNode;
@@ -159,7 +137,6 @@ void LinkedList<T>::add(unsigned long i, T x){
 		newNode->next = myNode;
 		myNode->prev = newNode;
 		numItems++;
-	}
 }
 
 template <class T>
